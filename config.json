@@ -1,4 +1,4 @@
 {
-    "connectionString" : "mongodb://admin:admin@ds117858.mlab.com:17858/webme",
+    "connectionString" : "mongodb://admin:admin@ds119258.mlab.com:19258/kidentertainment",
     "port" : 6969
 }
