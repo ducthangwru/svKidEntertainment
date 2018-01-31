@@ -18,7 +18,9 @@ Router.post('/', (req, res) => {
             fullname: req.body.fullname,
             dateofbirth: req.body.dateofbirth,
             status : false,
-            group : req.body.group
+            group : {
+                "$oid": "5a6fe111734d1d63031a767a"
+            }
         };
     
         // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
@@ -93,7 +95,6 @@ Router.post('/login', (req, res) => {
             } else {
                 var token = Utils.getToken(doc._id);
                 let menus = await menusModel.findAllMenus({});
-                console.log(menus);
                 res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token, menus : menus});
             }
         }
