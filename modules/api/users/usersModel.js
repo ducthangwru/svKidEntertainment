@@ -30,7 +30,8 @@ const updateUser = (user, callback) => {
             tokenfirebase : user.tokenfirebase,
             avatar : user.avatar,
             password : user.password,
-            email : user.email
+            email : user.email,
+            group : user.group
         }
     
         usersModel.findOneAndUpdate(id, queryUpdate, (err, doc) => {

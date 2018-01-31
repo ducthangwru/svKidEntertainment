@@ -10,6 +10,7 @@ const usersSchema = new Schema(
         fullname : {type : String, require : true},
         dateofbirth : {type : String},
         tokenfirebase : {type: String},
+        group : {type : ObjectId},
         avatar : {type: String},
         email : {type : String},
         status : {type : Boolean}

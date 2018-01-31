@@ -21,5 +21,5 @@ mongoose.connect(config.connectionString, (err) => {
 })
 
 app.listen(configPort , () => {
-  console.log(`App listen on ${config.port}`);
+  console.log(`App listen on ${configPort}`);
 })

@@ -16,7 +16,8 @@ Router.post('/', (req, res) => {
             tokenfirebase : req.body.tokenfirebase,
             fullname: req.body.fullname,
             dateofbirth: req.body.dateofbirth,
-            status : false
+            status : false,
+            group : req.body.group
         };
     
         // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
@@ -53,7 +54,8 @@ Router.put('/', (req, res) => {
             tokenfirebase : req.body.tokenfirebase,
             fullname: req.body.fullname,
             dateofbirth: req.body.dateofbirth,
-            status : req.body.status
+            status : req.body.status,
+            group : req.body.group
         };
         if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
         {
