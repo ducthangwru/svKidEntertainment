@@ -63,7 +63,10 @@ const selectUser = (user, callback) => {
             } else {
                 callback(null, doc);
             }
-        })
+        }).populate({
+            path: 'group',
+            model: groupsModel 
+          }).exec();
     }
     catch(err)
     {
