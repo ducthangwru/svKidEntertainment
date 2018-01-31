@@ -247,7 +247,7 @@ const getToken = (iduser) => {
     //My@~Care!&
     try
     {
-        return jwt.sign({iduser : iduser}, "My@~Care!&");
+        return jwt.sign({iduser : iduser}, "Kids@~Entertainment!&");
     }
     catch(err)
     {

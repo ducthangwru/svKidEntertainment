@@ -8,7 +8,7 @@ Router.post('/', (req, res) => {
     try
     {
         let newUser = {
-            idlogin : req.body.idlogin,
+            // idlogin : req.body.idlogin,
             username: req.body.username,
             password: req.body.password,
             email: req.body.email,
@@ -19,12 +19,12 @@ Router.post('/', (req, res) => {
             status : false
         };
     
-        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
-        {
-            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-        }
-        else
-        {
+        // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
             usersModel.createUser(newUser, (err, doc) => {
                     if (err != null) {
                         res.send({ status : false, msg : config.KHONG_THANH_CONG});
@@ -33,7 +33,7 @@ Router.post('/', (req, res) => {
                     }
                 }
             )
-        }
+        //}
     }
     catch(err)
     {
