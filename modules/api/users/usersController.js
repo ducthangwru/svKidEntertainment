@@ -18,9 +18,7 @@ Router.post('/', (req, res) => {
             fullname: req.body.fullname,
             dateofbirth: req.body.dateofbirth,
             status : true,
-            group : {
-                "$oid": "5a6fe111734d1d63031a767a"
-            }
+            group :"5a6fe111734d1d63031a767a"
         };
     
         // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
@@ -31,6 +29,7 @@ Router.post('/', (req, res) => {
         // {
             usersModel.createUser(newUser, (err, doc) => {
                     if (err != null) {
+                        console.log(err);
                         res.send({ status : false, msg : config.KHONG_THANH_CONG});
                     } else {
                         res.send({ status : true, msg : config.THANH_CONG});
