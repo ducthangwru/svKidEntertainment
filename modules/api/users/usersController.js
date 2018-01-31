@@ -17,7 +17,7 @@ Router.post('/', (req, res) => {
             tokenfirebase : req.body.tokenfirebase,
             fullname: req.body.fullname,
             dateofbirth: req.body.dateofbirth,
-            status : false,
+            status : true,
             group : {
                 "$oid": "5a6fe111734d1d63031a767a"
             }
