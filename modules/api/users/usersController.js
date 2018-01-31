@@ -1,6 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 const usersModel = require('./usersModel');
+const menusModel = require('../menus/menusModel');
 const config = require('../../../configString.json');
 const Utils = require('../../../utils/Utils');
 
@@ -86,12 +87,14 @@ Router.post('/login', (req, res) => {
             password: req.body.password
         }
 
-        usersModel.selectUser(user, (err, doc) => {
+        usersModel.selectUser(user, async (err, doc) => {
             if (err != null) {
                 res.send({ status : false, msg : config.KHONG_THANH_CONG, data : null, token : ""});
             } else {
                 var token = Utils.getToken(doc._id);
-                res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token});
+                let menus = await menusModel.findAllMenus({});
+                console.log(menus);
+                res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token, menus : menus});
             }
         }
     )
