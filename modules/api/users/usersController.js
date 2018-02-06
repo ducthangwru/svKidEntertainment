@@ -93,7 +93,7 @@ Router.post('/login', async (req, res) => {
         } else {
             var token = Utils.getToken(result._id);
             let menus = await menusModel.findAllMenus({});
-            let update = await usersModel.updateTokenFirebaseUser(doc._id, user.tokenfirebase);
+            let update = await usersModel.updateTokenFirebaseUser(result._id, user.tokenfirebase);
             res.send({ status : true, msg : config.THANH_CONG, data : result, token : token, menus : menus});
         }
     }
