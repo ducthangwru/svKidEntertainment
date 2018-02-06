@@ -231,14 +231,15 @@ const MD5 = (string) => {
 const verifyLogin = (iduser, token) => {
     try
     {
-        var decoded = jwt.verify(token, 'My@~Care!&');
-        if(decoded.iduser == iduser)
+        var decoded = jwt.verify(token, 'Kids@~Entertainment!&');
+        if(decoded.iduser === iduser)
             return true;
         else
             return false;
     }
     catch(err)
     {
+        console.log(err);
         return false;
     }
 }

@@ -5,7 +5,7 @@ const menusModel = require('../menus/menusModel');
 const config = require('../../../configString.json');
 const Utils = require('../../../utils/Utils');
 
-Router.post('/', (req, res) => {
+Router.post('/', async (req, res) => {
     try
     {
         let newUser = {
@@ -27,15 +27,12 @@ Router.post('/', (req, res) => {
         // }
         // else
         // {
-            usersModel.createUser(newUser, (err, doc) => {
-                    if (err != null) {
-                        console.log(err);
-                        res.send({ status : false, msg : config.KHONG_THANH_CONG});
-                    } else {
-                        res.send({ status : true, msg : config.THANH_CONG});
-                    }
-                }
-            )
+            let result = await usersModel.createUser(newUser);
+            if (result === null) {
+                res.send({ status : false, msg : config.KHONG_THANH_CONG});
+            } else {
+                res.send({ status : true, msg : config.THANH_CONG});
+            }
         //}
     }
     catch(err)
@@ -44,7 +41,7 @@ Router.post('/', (req, res) => {
     }
 });
 
-Router.put('/', (req, res) => {
+Router.put('/', async (req, res) => {
     try
     {
         let newUser = {
@@ -59,19 +56,19 @@ Router.put('/', (req, res) => {
             status : req.body.status,
             group : req.body.group
         };
+
         if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
         {
             res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
         }
         else
         {
-            usersModel.updateUser(newUser, (err, doc) => {
-                if (err != null) {
-                    res.send({ status : false, msg : config.KHONG_THANH_CONG});
-                } else {
-                    res.send({ status : true, msg : config.THANH_CONG});
-                }
-            });
+            let result = await usersModel.updateUser(newUser);
+            if (result === null) {
+                res.send({ status : false, msg : config.KHONG_THANH_CONG});
+            } else {
+                res.send({ status : true, msg : config.THANH_CONG});
+            }
         }
     }
     catch(err)
@@ -80,29 +77,88 @@ Router.put('/', (req, res) => {
     }
 });
 
-Router.post('/login', (req, res) => {
+Router.post('/login', async (req, res) => {
     try
     {
         let user = {
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            tokenfirebase : req.body.tokenfirebase
         }
 
-        usersModel.selectUser(user, async (err, doc) => {
-            if (err != null) {
-                res.send({ status : false, msg : config.KHONG_THANH_CONG, data : null, token : ""});
-            } else {
-                var token = Utils.getToken(doc._id);
-                let menus = await menusModel.findAllMenus({});
-                res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token, menus : menus});
-            }
+        let result = await usersModel.selectUser(user);
+        if (result === null) 
+        {
+            res.send({ status : false, msg : config.KHONG_THANH_CONG, data : null, token : ""});
+        } else {
+            var token = Utils.getToken(result._id);
+            let menus = await menusModel.findAllMenus({});
+            let update = await usersModel.updateTokenFirebaseUser(doc._id, user.tokenfirebase);
+            res.send({ status : true, msg : config.THANH_CONG, data : result, token : token, menus : menus});
         }
-    )
     }
     catch(err)
     {
+        console.log(err);
         res.send({status : false, msg : config.CO_LOI_XAY_RA});
     }
 });
+
+Router.get('/logout', async (req, res) => {
+    try
+    {
+       let id = req.query.id;
+       if(!Utils.verifyLogin(req.query.id, req.headers['token']))
+       {
+           res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+       }
+       else
+       {
+            let update = await usersModel.updateTokenFirebaseUser(id, "");
+            if (update === null) {
+                res.send({ status : false, msg : config.KHONG_THANH_CONG});
+            } else {
+                res.send({ status : true, msg : config.THANH_CONG});
+            }
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send({status : false, msg : config.CO_LOI_XAY_RA});
+    }
+});
+
+Router.post('/changepassword', async (req, res) => {
+    try
+    {
+        let user = {
+            username: req.body.username,
+            password: req.body.password,
+            newpassword : req.body.newpassword
+        }
+
+        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        {
+            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        }
+        else
+        {
+            let result = usersModel.changePassword(user);
+            if(result === 0)
+                res.send({status : false, msg : config.TEN_TK_HOAC_MK_SAI});
+            else if(result === -1)
+                res.send({status : false, msg : config.CO_LOI_XAY_RA});
+            else 
+                res.send({ status : true, msg : config.THANH_CONG});
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send({status : false, msg : config.CO_LOI_XAY_RA});
+    }
+});
+
 
 module.exports = Router;
