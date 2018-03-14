@@ -8,19 +8,19 @@ Router.get('/', async (req, res) => {
     try
     {
        let idlogin = req.query.idlogin;
-       if(!Utils.verifyLogin(req.query.idlogin, req.headers['token']))
-       {
-           res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-       }
-       else
-       {
+    //    if(!Utils.verifyLogin(req.query.idlogin, req.headers['token']))
+    //    {
+    //        res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+    //    }
+    //    else
+    //    {
             let result = await categoriesModel.findByIdMenu(req.query.idmenu);
             if (result === null) {
                 res.send({ status : false, msg : config.KHONG_THANH_CONG, data : null});
             } else {
                 res.send({ status : true, msg : config.THANH_CONG, data : result});
             }
-        }
+       // }
     }
     catch(err)
     {

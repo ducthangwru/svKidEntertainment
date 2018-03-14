@@ -57,19 +57,19 @@ Router.put('/', async (req, res) => {
             group : req.body.group
         };
 
-        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
-        {
-            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-        }
-        else
-        {
+        // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
             let result = await usersModel.updateUser(newUser);
             if (result === null) {
                 res.send({ status : false, msg : config.KHONG_THANH_CONG});
             } else {
                 res.send({ status : true, msg : config.THANH_CONG});
             }
-        }
+        //}
     }
     catch(err)
     {
@@ -108,19 +108,19 @@ Router.get('/logout', async (req, res) => {
     try
     {
        let id = req.query.id;
-       if(!Utils.verifyLogin(req.query.id, req.headers['token']))
-       {
-           res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-       }
-       else
-       {
+    //    if(!Utils.verifyLogin(req.query.id, req.headers['token']))
+    //    {
+    //        res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+    //    }
+    //    else
+    //    {
             let update = await usersModel.updateTokenFirebaseUser(id, "");
             if (update === null) {
                 res.send({ status : false, msg : config.KHONG_THANH_CONG});
             } else {
                 res.send({ status : true, msg : config.THANH_CONG});
             }
-        }
+        //}
     }
     catch(err)
     {
@@ -138,12 +138,12 @@ Router.post('/changepassword', async (req, res) => {
             newpassword : req.body.newpassword
         }
 
-        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
-        {
-            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-        }
-        else
-        {
+        // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
             let result = usersModel.changePassword(user);
             if(result === 0)
                 res.send({status : false, msg : config.TEN_TK_HOAC_MK_SAI});
@@ -151,7 +151,7 @@ Router.post('/changepassword', async (req, res) => {
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
             else 
                 res.send({ status : true, msg : config.THANH_CONG});
-        }
+        //}
     }
     catch(err)
     {
