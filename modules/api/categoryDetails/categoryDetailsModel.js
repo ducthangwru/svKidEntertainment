@@ -34,6 +34,7 @@ const updateCategoryDetail = async (categoryDetail) => {
         {
             var id = categoryDetail._id;
             var queryUpdate = {
+                name : categoryDetail.name,
                 category : categoryDetail.category,
                 link : categoryDetail.link,
                 description : categoryDetail.description
