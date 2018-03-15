@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const categoriesSchema = require('./categoriesSchema');
 let categoriesModel = mongoose.model('categories', categoriesSchema);
+const categoryDetailsModel = require('../categoryDetails/categoryDetailsModel');
 
 const findByIdMenu = async (idmenu) => {
     try
@@ -54,7 +55,11 @@ const updateCategory = async (category) => {
 const removeCategory = async (id) => {
     try
     {
-        return await categoriesModel.remove({_id : id}).exec();
+        let categoryDetails = await categoryDetailsModel.findByIdCategory(id);
+        if(categoryDetails === {})
+            return await categoriesModel.remove({_id : id}).exec();
+        else 
+            return 0;
     }
     catch(err)
     {
