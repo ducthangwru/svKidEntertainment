@@ -56,7 +56,8 @@ const removeCategory = async (id) => {
     try
     {
         let categoryDetails = await categoryDetailsModel.findByIdCategory(id);
-        if(categoryDetails === {})
+        console.log(categoryDetails);
+        if(categoryDetails === [])
             return await categoriesModel.remove({_id : id}).exec();
         else 
             return 0;
