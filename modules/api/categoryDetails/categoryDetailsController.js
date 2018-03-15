@@ -43,7 +43,7 @@ Router.post('/', async (req, res) => {
     //    {
             let categoryDetail = {
                 category : req.body.category,
-                name : req.body.name,
+                namevideo : req.body.namevideo,
                 description : req.body.description,
                 link : req.body.link
             }
@@ -78,7 +78,7 @@ Router.put('/', async (req, res) => {
     //    {
             let categoryDetail = {
                 _id : req.body.id,
-                name : req.body.name,
+                namevideo : req.body.namevideo,
                 category : req.body.category,
                 description : req.body.description,
                 link : req.body.link
