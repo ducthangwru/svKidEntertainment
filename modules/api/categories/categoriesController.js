@@ -14,7 +14,7 @@ Router.get('/', async (req, res) => {
     //    }
     //    else
     //    {
-            let result = await categoriesModel.findByIdMenu(req.query.idmenu);
+            let result = await categoriesModel.findByIdMenu(req.query.idmenu, req.query.idlogin);
             if (result === null) {
                 res.send({ status : false, msg : config.KHONG_THANH_CONG, data : null});
             } else {
@@ -42,6 +42,7 @@ Router.post('/', async (req, res) => {
     //    {
             let category = {
                 menu : "5a71332c734d1d71dd52a78d",
+                user : req.body.idlogin,
                 description : req.body.description,
                 image : req.body.image,
                 name : req.body.name

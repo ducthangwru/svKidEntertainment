@@ -3,10 +3,10 @@ const categoriesSchema = require('./categoriesSchema');
 let categoriesModel = mongoose.model('categories', categoriesSchema);
 const categoryDetailsModel = require('../categoryDetails/categoryDetailsModel');
 
-const findByIdMenu = async (idmenu) => {
+const findByIdMenu = async (idmenu, iduser) => {
     try
     {
-        return await categoriesModel.find({menu : idmenu}).exec();
+        return await categoriesModel.find({menu : idmenu, user : iduser}).exec();
     }
     catch(err)
     {

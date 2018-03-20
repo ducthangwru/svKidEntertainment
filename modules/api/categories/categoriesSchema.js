@@ -6,6 +6,7 @@ const ObjectId = Schema.Types.ObjectId;
 const categoriesSchema = new Schema(
     {
        menu : {type : ObjectId, require : true},
+       user : {type : ObjectId, require : true},
        name : {type : String, require : true},
        image : {type : String, require : true},
        description : {type : String}
