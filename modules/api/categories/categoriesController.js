@@ -4,7 +4,7 @@ const categoriesModel = require('../categories/categoriesModel');
 const config = require('../../../configString.json');
 const Utils = require('../../../utils/Utils');
 
-Router.get('/', async (req, res) => {
+Router.get('/', (req, res) => {
     try
     {
        let idlogin = req.query.idlogin;
@@ -14,12 +14,16 @@ Router.get('/', async (req, res) => {
     //    }
     //    else
     //    {
-            let result = await categoriesModel.findByIdMenu(req.query.idmenu, req.query.idlogin);
-            if (result === null) {
-                res.send({ status : false, msg : config.KHONG_THANH_CONG, data : null});
-            } else {
-                res.send({ status : true, msg : config.THANH_CONG, data : result});
-            }
+            let result = [];
+            
+            categoriesModel.selectByIdMenu(req.query.idmenu, req.query.idlogin, (err, categories) => {
+                result = categories;
+                if (result === null) {
+                    res.send({ status : false, msg : config.KHONG_THANH_CONG, data : null});
+                } else {
+                    res.send({ status : true, msg : config.THANH_CONG, data : result});
+                }
+            });
        // }
     }
     catch(err)

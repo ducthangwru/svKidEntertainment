@@ -15,6 +15,12 @@ const findByIdMenu = async (idmenu, iduser) => {
     }
 }
 
+const selectByIdMenu = (idmenu, iduser, callback) => {
+    categoriesModel.find({menu : idmenu, user : iduser}).exec(function(err, categories) {
+        callback(err, categories);
+    });
+}
+
 const createCategory = async (category) => {
     try
     {
@@ -70,5 +76,5 @@ const removeCategory = async (id) => {
 
 
 module.exports = {
-    findByIdMenu, createCategory, updateCategory, removeCategory
+    findByIdMenu, createCategory, updateCategory, removeCategory, selectByIdMenu
 }
